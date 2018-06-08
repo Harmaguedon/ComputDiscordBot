@@ -1,0 +1,2 @@
+discord-py>=1.0.0a
+multiping>=1.1.2

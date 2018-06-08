@@ -1,0 +1,35 @@
+{
+    "bot" : {
+        "prefix" : "!",
+        "token" : "",
+        "startup extensions" : [
+            "portier",
+            "netInfo",
+            "file",
+            "botInfo",
+            "admin"
+        ],
+        "default channels" : {
+
+        },
+        "admins" : [
+
+        ],
+        "connection message" : "I'm back !! :sunglasses:"
+    },
+
+    "botInfo" : {
+        "missing doc message" : "lol nope you have to write some doc"
+    },
+
+    "file" : {
+        "folder path" : "Files/",
+        "folder max size" : 1073741824,
+        "file max size" : 8388608
+    },
+
+    "portier" : {
+        "ip" : "127.0.0.1",
+        "port" : 54321
+    },
+}

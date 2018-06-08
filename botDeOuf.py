@@ -2,7 +2,6 @@ import asyncio
 import discord
 import inspect
 import sys
-import json
 from datetime import datetime as dt
 from discord.ext import commands
 from utils import capitalize, lower
@@ -13,17 +12,14 @@ class BotDeOuf(commands.Bot):
     launch_time = None
     config = None
 
-    def __init__(self):
-        with open("./config.json", "r") as f:
-            self.config = json.load(f)
-
+    def __init__(self, config):
+        self.config = config
         self.admins = self.config["bot"]["admins"]
 
         super().__init__(command_prefix=self.config["bot"]["prefix"])
         self.remove_command("help")
 
     def run(self):
-        #super().run("NDUxMDQzNzIzNzU3NzQ4MjI0.De8Fbw.A-ipYP4HFYKcw3FGCd_zqXmK6Qs") #Bot_portier
         super().run(self.config["bot"]["token"], reconnect=True)
 
     async def is_admin(self, ctx):
@@ -41,7 +37,6 @@ class BotDeOuf(commands.Bot):
 
     async def on_ready(self):
         self.launch_time = dt.utcnow()
-
         for guild_name, channel_name in (self.config["bot"]["default channels"]).items():
             guild = discord.utils.get(self.guilds, name=guild_name)
             if guild != None:
@@ -56,7 +51,6 @@ class BotDeOuf(commands.Bot):
             except Exception as e:
                 exc = '{}: {}'.format(type(e).__name__, e)
                 print('Failed to load extension {}\n{}'.format(extension, exc))
-
         print('Bot ready!')
         print('Logged in as ' + self.user.name)
         print('-------')

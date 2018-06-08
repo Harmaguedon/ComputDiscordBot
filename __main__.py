@@ -1,16 +1,29 @@
 import sys
+import os
 import discord
 from discord.ext import commands
 import asyncio
+import json
 import botDeOuf
 from utils import anti_capitalize
 
-#multiping needed for netInfo
 
-print("discord.py " + discord.__version__) #discord.py 1.0.0a needed (pip3 install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice])
-print("python" + sys.version) #python >= 3.5
+def check_versions():
+    print("discord.py " + discord.__version__) #discord.py 1.0.0a needed (pip3 install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice])
+    print("python" + sys.version) #python >= 3.5
 
-bot = botDeOuf.BotDeOuf()
+def setup(config):
+    try:
+        os.stat(config["file"]["folder path"])
+    except:
+        os.mkdir(config["file"]["folder path"])
+
+check_versions()
+
+with open("./config.json", "r") as f:
+    config = json.load(f)
+    setup(config)
+    bot = botDeOuf.BotDeOuf(config)
 
 @bot.command(name='load', pass_context=True)
 @commands.check(bot.is_admin)

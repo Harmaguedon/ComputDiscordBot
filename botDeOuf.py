@@ -1,7 +1,10 @@
 import asyncio
+import asyncpg
 import discord
 import inspect
+import time
 import sys
+import dbManager
 from datetime import datetime as dt
 from discord.ext import commands
 from utils import capitalize, lower
@@ -11,10 +14,15 @@ class BotDeOuf(commands.Bot):
     admins = None
     launch_time = None
     config = None
+    db = None
 
     def __init__(self, config):
         self.config = config
         self.admins = self.config["bot"]["admins"]
+
+        loop = asyncio.get_event_loop()
+        self.db = loop.run_until_complete(dbManager.connection(self.db, self.config["bot"]["database config"]))
+        loop.run_until_complete(dbManager.setup(self.db))
 
         super().__init__(command_prefix=self.config["bot"]["prefix"])
         self.remove_command("help")
@@ -43,7 +51,7 @@ class BotDeOuf(commands.Bot):
                 channel = discord.utils.get(guild.channels, name=channel_name)
                 if channel != None:
                     self.default_channels.append(channel)
-        asyncio.ensure_future(self.send_message_default(self.config["bot"]["connection message"]))
+        await self.send_message_default(self.config["bot"]["connection message"])
 
         for extension in self.config["bot"]["startup extensions"]:
             try:

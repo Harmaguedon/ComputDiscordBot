@@ -31,7 +31,7 @@ class BotDeOuf(commands.Bot):
         super().run(self.config["bot"]["token"], reconnect=True)
 
     async def is_admin(self, ctx):
-        if not (ctx.author.name+ctx.author.discriminator) in self.admins:
+        if not ("{}#{}".format(ctx.author.name, ctx.author.discriminator)) in self.admins:
             await ctx.send("{} This command is restricted to admins users".format(ctx.author.mention))
             return False
         return True

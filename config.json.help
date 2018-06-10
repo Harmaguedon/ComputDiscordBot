@@ -2,20 +2,27 @@
     "bot" : {
         "prefix" : "!",
         "token" : "",
-        "startup extensions" : [
+        "startup extnsions" : [
             "portier",
             "netInfo",
             "file",
             "botInfo",
-            "admin"
+            "admin",
+            "event"
         ],
         "default channels" : {
-
+            "server" : "channel"
         },
         "admins" : [
-
+            "user#discriminator"
         ],
-        "connection message" : "I'm back !! :sunglasses:"
+        "connection message" : "I'm back !! :sunglasses:",
+        "database config" : {
+            "user": "username",
+            "password": "password",
+            "database": "database name",
+            "host": "127.0.0.1"
+        }
     },
 
     "botInfo" : {
@@ -31,5 +38,5 @@
     "portier" : {
         "ip" : "127.0.0.1",
         "port" : 54321
-    },
+    }
 }
